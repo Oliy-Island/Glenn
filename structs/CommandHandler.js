@@ -1,5 +1,5 @@
 const fs = require('fs');
-const EventEmitter = require('events').EventEmitter;
+const { EventEmitter } = require('events');
 
 class CommandHandler extends EventEmitter {
     constructor() {

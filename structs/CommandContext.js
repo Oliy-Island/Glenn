@@ -37,6 +37,8 @@ class CommandContext {
         const msg = await this.command.channel.createMessage(content);
 
         this.messages.push(msg);
+
+        return msg
     }
 
     awaitResponse(possibleResponses, listenTimeout = 60000) {
@@ -67,7 +69,7 @@ class CommandContext {
     async finish(err, display) {
         if (err) {
             await this.reply(display ? err : 'There was an error executing your command.');
-            console.error(`Error executing command:\n`, err);
+            console.error(`Error executing command ${this.name}:\n`, err);
         }
     }
 }
