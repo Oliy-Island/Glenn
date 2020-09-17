@@ -46,6 +46,6 @@ async function start() {
     client.connect();
 }
 
-if (process.env.debug === '1') Logger.setLevel('debug')
+// if (process.env.DEBUG === '1') Logger.setLevel('debug') uncomment when Logger is finished
 
 start();
