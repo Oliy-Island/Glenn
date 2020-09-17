@@ -1,4 +1,4 @@
-# Moana
+# Glenn
 Private bot for the Oliy Island Discord server.
 
 ## Command Framework
