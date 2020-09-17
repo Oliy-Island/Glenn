@@ -1,7 +1,7 @@
 {
-  "name": "moana",
+  "name": "glenn",
   "version": "1.0.0",
-  "description": "Private Moana bot for the Oliy Island Discord server.",
+  "description": "Private Glenn bot for the Oliy Island Discord server.",
   "main": "index.js",
   "dependencies": {
     "bufferutil": "^4.0.1",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ssMMiles/moana.git"
+    "url": "git+https://github.com/Oliy-Island/Glenn.git"
   },
-  "author": "https://github.com/ssMMiles",
+  "author": "https://github.com/Oliy-Island",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ssMMiles/moana/issues"
+    "url": "https://github.com/Oliy-Island/Glenn/issues"
   },
-  "homepage": "https://github.com/ssMMiles/moana#readme"
+  "homepage": "https://github.com/Oliy-Island/Glenn#readme"
 }

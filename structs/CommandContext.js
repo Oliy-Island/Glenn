@@ -10,11 +10,15 @@ class CommandContext {
         return this;
     }
 
+    get prefix () {
+        return process.env.BASE_PREFIX;
+    }
+
+    get isCommand () {
+        return this.command.content.startsWith(this.prefix);
+    }
+
     async prepare() {
-        this.prefix = process.env.BASE_PREFIX;
-
-        this.isCommand = this.command.content.startsWith(this.prefix);
-
         if (!this.isCommand) return this;
 
         const args = this.command.content.substring(this.prefix.length).split(/[ ]+/);
@@ -33,6 +37,8 @@ class CommandContext {
         const msg = await this.command.channel.createMessage(content);
 
         this.messages.push(msg);
+
+        return msg
     }
 
     awaitResponse(possibleResponses, listenTimeout = 60000) {
@@ -63,7 +69,7 @@ class CommandContext {
     async finish(err, display) {
         if (err) {
             await this.reply(display ? err : 'There was an error executing your command.');
-            console.error(`Error executing command:\n`, err);
+            console.error(`Error executing command ${this.name}:\n`, err);
         }
     }
 }

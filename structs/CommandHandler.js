@@ -1,5 +1,5 @@
 const fs = require('fs');
-const EventEmitter = require('events').EventEmitter;
+const { EventEmitter } = require('events');
 
 class CommandHandler extends EventEmitter {
     constructor() {
@@ -12,7 +12,7 @@ class CommandHandler extends EventEmitter {
     }
 
     async run(context) {
-        await this.commands[context.name].run(context);
+        await this.commands[context.name].run.bind(context)();
     }
 
     exists(context) {
