@@ -13,6 +13,7 @@ You can also specify aliases for commands by setting module.aliases to an array 
 | client | Also the Eris client object |
 | name | Command name |
 | args | Array of command arguments, seperated by whitespace |
+
 | Method | Description |
 | - | - |
 | reply | Reply to the command - Returns Promise |
