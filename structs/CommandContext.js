@@ -12,7 +12,10 @@ class CommandContext {
     reply (text) {
         return this.send(this.client.embed
             .setColor('GREEN') // TODO
-            .setDescription(text)
+            .setDescription(this.client.replacer(text, {
+                user: `${this.message.author}`,
+                channel: `${this.message.channel}`
+            }))
             .setTimestamp()
         )
     }
