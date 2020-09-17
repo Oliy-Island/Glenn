@@ -12,7 +12,7 @@ class CommandHandler extends EventEmitter {
     }
 
     async run(context) {
-        await this.commands[context.name].run(context);
+        await this.commands[context.name].run.bind(context)();
     }
 
     exists(context) {
