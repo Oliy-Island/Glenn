@@ -1,68 +1,56 @@
-const fs = require('fs');
-const { EventEmitter } = require('events');
+const { Collection } = require('discord.js')
 
-class CommandHandler extends EventEmitter {
-    constructor() {
-        super();
+const { readdirSync } = require('fs')
+const Path = require('path')
 
-        this.commands = {};
-        this.loaded = false;
+const CommandContext = require('./CommandContext')
 
-        this.awaitingResponses = {};
+class CommandHandler {
+    constructor (client) {
+        this.client = client
+
+        this.commands = new Collection()
     }
 
-    async run(context) {
-        await this.commands[context.name].run.bind(context)();
+    load () {
+        const commands = readdirSync(Path.resolve(__dirname, '../commands'))
+
+        commands.forEach(command => {
+            const [name, ext] = command.split('.')
+            if (ext !== 'js') return
+
+            delete require.cache[require.resolve(`../commands/${command}`)]
+            const cmd = require(`../commands/${command}`)
+
+            if (!cmd.info) cmd.info = {}
+            if (!cmd.info.aliases) cmd.info.aliases = []
+
+            cmd.info.name = name
+
+            this.commands.set(name, cmd)
+        })
     }
 
-    exists(context) {
-        return this.commands[context.name] != null;
-    }
+    event (message) {
+        const prefix = this.client.config.prefixes.find(x => message.content.startsWith(x))
+        if (!prefix) return
 
-    load(directory) {
-        return new Promise((resolve, reject) => {
-            this.directory = directory;
+        const args = message.content.slice(prefix.length).split(/\s/)
+        const command = args.shift()
 
-            fs.readdir(this.directory, (err, files) => {
-                if (err) reject(err);
+        const cmd = this.commands.find(x => [x.info.name, ...x.info.aliases].includes(command.toLowerCase()))
 
-                for (let file of files) {
-                    const name = file.substring(0, file.length - 3)
-                    if (this.commands[name] != null) reject(`Duplicate command name: ${name}`);
+        message.args = args
 
-                    let command = require(`${this.directory}/${file}`);
+        const context = new CommandContext(this.client, cmd, message)
 
-                    this.commands[name] = { run: command.fn, filename: file };
-                    if (process.env.DEBUG === '1') console.log(`Command Handler: Registered command ${process.env.BASE_PREFIX}${name}`);
+        try {
+            cmd.run.bind(context)(message)
+        } catch (err) {
+            console.error(err)
 
-                    if (command.aliases) for (let alias of command.aliases) {
-                        this.commands[alias] = { isAlias: true, run: command.fn, filename: file };
-                        if (process.env.DEBUG === '1') console.log(`Command Handler: Registered alias ${process.env.BASE_PREFIX}${alias}`);
-                    }
-                }
-                
-                this.loaded = true;
-                this.emit('ready');
-
-                resolve()
-            })
-        });
-    }
-
-    unload() {
-        this.loaded = false;
-
-        for (let command of Object.keys(this.commands)) {
-            if (!command.isAlias) delete require.cache[require.resolve(`${this.directory}/${this.commands[command].filename}`)]
-            if (process.env.DEBUG === '1') console.log(`Command Handler: Unregistered command ${process.env.BASE_PREFIX}${command}`);
+            context.error()
         }
-        
-        this.commands = []
-    }
-
-    async reload() {
-        this.unload();
-        await this.load(this.directory);
     }
 }
 

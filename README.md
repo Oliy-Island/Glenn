@@ -3,18 +3,20 @@ Private bot for the Oliy Island Discord server.
 
 ## Command Framework
 
-The framework loads commands from the ``./commands`` directory by requiring them as a module and looking for a ``.fn`` property.
-This should be an asynchronous function that takes a single "Context" argument.
-You can also specify aliases for commands by setting module.aliases to an array of strings.
+The framework loads commands from the ``./commands`` directory by requiring them as a module and looking for a ``.run`` property.
+This a function ran in context with the commands `CommandContext` (You'll find how to use that below)
+The function receives a single `message` argument which is a discordjs#Message
+Do keep in mind, please use the context methods rather than methods off of the message argument
+
 #### Context
 | Property | Description |
 | - | - |
-| command | Original message object from Eris |
-| client | Also the Eris client object |
-| name | Command name |
-| args | Array of command arguments, seperated by whitespace |
+| message | Message object + `.args` which is an array of arguments|
+| client | Client |
+| command | Command object |
 
 | Method | Description |
 | - | - |
-| reply | Reply to the command - Returns Promise |
-| awaitResponse | Very basic message listener. Takes an array of strings, waits for a corresponding message from the same author in the same channel and resolves with the message content. |
+| reply (text) | Reply to the command in an embed |
+| error (text) | Reply to the command with an error embed |
+| send (content) | Port of discordjs#TextChannel.send (Use .reply and .error when able) |

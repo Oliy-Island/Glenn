@@ -1,76 +1,28 @@
 class CommandContext {
-    constructor(msg, client) {
-        this.command = msg;
-        this.messages = [this.command];
-
-        this.client = client;
-        
-        this.awaitingResponses = {};
-
-        return this;
+    constructor(client, command, message) {
+        this.client = client
+        this.command = command
+        this.message = message
     }
 
-    get prefix () {
-        return process.env.BASE_PREFIX;
+    send (content) {
+        return this.message.channel.send(content)
     }
 
-    get isCommand () {
-        return this.command.content.startsWith(this.prefix);
+    reply (text) {
+        return this.send(this.client.embed
+            .setColor('GREEN') // TODO
+            .setDescription(text)
+            .setTimestamp()
+        )
     }
 
-    async prepare() {
-        if (!this.isCommand) return this;
-
-        const args = this.command.content.substring(this.prefix.length).split(/[ ]+/);
-
-        this.name = args.shift();
-        this.args = args;
-        
-        return this;
-    }
-
-    async run() {
-        await this.client.commands.run(this);
-    }
-
-    async reply(content) {
-        const msg = await this.command.channel.createMessage(content);
-
-        this.messages.push(msg);
-
-        return msg
-    }
-
-    awaitResponse(possibleResponses, listenTimeout = 60000) {
-        return new Promise(resolve => {
-            let responses = [];
-
-            let gotResponse = reason => {
-                delete this.client.commands.awaitingResponses[this.command.id];
-                resolve(reason);
-            }
-
-            const timeout = setTimeout(() => {
-                finish('TIMEOUT');
-            }, listenTimeout)
-            
-            this.client.commands.awaitingResponses[this.command.id] = (msg) => {
-                if (responses.includes(msg.content) && this.command.author.id === msg.author.id && this.command.channel.id === msg.channel.id) {
-                    clearTimeout(timeout);
-                    this.messages.push(msg);
-
-                    gotResponse(msg.content);
-                    return true;
-                }
-            }
-        });
-    }
-
-    async finish(err, display) {
-        if (err) {
-            await this.reply(display ? err : 'There was an error executing your command.');
-            console.error(`Error executing command ${this.name}:\n`, err);
-        }
+    error (text) {
+        return this.send(this.client.embed
+            .setColor('RED')
+            .setTitle(`${text ? `Error Occured: ${text}` : 'An Error Occured While Running This Command'}`)
+            .setTimestamp()
+        )
     }
 }
 

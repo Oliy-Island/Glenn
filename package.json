@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "bufferutil": "^4.0.1",
-    "eris": "^0.13.3",
+    "discord.js": "^12.3.1",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {},
