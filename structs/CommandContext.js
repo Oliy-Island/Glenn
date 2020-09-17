@@ -10,11 +10,15 @@ class CommandContext {
         return this;
     }
 
+    get prefix () {
+        return process.env.BASE_PREFIX;
+    }
+
+    get isCommand () {
+        return this.command.content.startsWith(this.prefix);
+    }
+
     async prepare() {
-        this.prefix = process.env.BASE_PREFIX;
-
-        this.isCommand = this.command.content.startsWith(this.prefix);
-
         if (!this.isCommand) return this;
 
         const args = this.command.content.substring(this.prefix.length).split(/[ ]+/);
