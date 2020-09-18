@@ -2,7 +2,7 @@
 Private bot for the Oliy Island Discord server.
 
 ## Command Framework
-haahahaha yes
+
 The framework loads commands from the ``./commands`` directory by requiring them as a module and looking for a ``.run`` property.
 This a function ran in context with the commands `CommandContext` (You'll find how to use that below)
 The function receives a single `message` argument which is a discordjs#Message
