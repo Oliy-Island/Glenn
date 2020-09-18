@@ -1,24 +1,50 @@
-name: Node.js CI
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-on: [push]
+name: glenn-deploy
+
+on:
+  push:
+    branches: [master]
 
 jobs:
   build:
-    runs-on: self-hosted
-
+    name: build+test
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
-
+        node-version: [12.x, 14.x]
     steps:
-    - name: Deploy
-      env:
-        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-      run: |
-        cd ~/glenn &&
-        git config --global user.email "support@top.gg" &&
-        git config --global user.name "Glenn" &&
-        git fetch --all &&
-        git reset --hard origin/master &&
-        echo "DISCORD_TOKEN=$DISCORD_TOKEN" > .env &&
-        npm install
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+        name: Install dependencies
+      - run: npm run test
+        name: Run tests
+  deploy:
+    name: deployy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy package to vps
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          host: ${{ secrets.DBL_HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          envs: GITHUB_USERNAME, GITHUB_TOKEN
+          script: |
+            cd ~/glenn && 
+            git config --global user.email "support@top.gg" &&
+            git config --global user.name "Glenn" &&
+            git fetch --all &&
+            git reset --hard origin/master && 
+            npm ci
+            pm2 start all
