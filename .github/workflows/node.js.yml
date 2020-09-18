@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: self-hosted
 
     strategy:
@@ -22,5 +21,15 @@ jobs:
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
     - run: pm2 kill
+  start:
+    runs-on: self-hosted
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    needs: build
+
+    steps:
     - run: pm2 start . -n "Glenn"
     - run: sleep 20 && tail -20 ~/.pm2/logs/Glen-out.log
