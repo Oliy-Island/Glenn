@@ -28,5 +28,5 @@ jobs:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         OWNER_ID: 129908908096487424
     - run: npm install
-    - run: DISCORD_TOKEN=$DISCORD_TOKEN BASE_PREFIX=! OWNER_ID=$OWNER_ID DEBUG=0 pm2 restart Bot
+    - run: DISCORD_TOKEN="$DISCORD_TOKEN" BASE_PREFIX=! OWNER_ID="$OWNER_ID" DEBUG=0 pm2 restart Bot
 
