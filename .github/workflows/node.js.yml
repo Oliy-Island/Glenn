@@ -1,18 +1,14 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
+name: Node Github CI
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
-  build:
+  test:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -20,18 +16,31 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    
-    - run: npm install
-  
-    - name: set environment variables
-      uses: allenevans/set-env@v1.0.0
-      with:
-        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-  
-    - run: DISCORD_TOKEN=${DISCORD_TOKEN} BASE_PREFIX=! OWNER_ID=129908908096487424 DEBUG=0 pm2 restart Bot
+    - name: npm install and test
+      run: |
+        npm install
+        npm test
+      env:
+        CI: true
 
+  deploy:
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: SSH and deploy node app
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd ~/node-github-demo
+          git pull origin master
+          npm install --production
+          pm2 restart node-app
