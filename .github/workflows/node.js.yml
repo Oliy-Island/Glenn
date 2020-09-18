@@ -21,3 +21,4 @@ jobs:
     - run: pm2 restart all
       env:
         CI: true
+    - run: sleep 20 && tail -20 ~/.pm2/logs/Glen-out.log
