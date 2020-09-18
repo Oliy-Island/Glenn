@@ -31,15 +31,11 @@ jobs:
     steps:
       - name: Deploy package to vps
         uses: appleboy/ssh-action@master
-        env:
-          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          host: ${{ secrets.DBL_HOST }}
+          host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.PRIVATE_KEY }}
-          envs: GITHUB_USERNAME, GITHUB_TOKEN
           script: |
             cd ~/glenn && 
             git config --global user.email "support@top.gg" &&
