@@ -10,7 +10,7 @@ Do keep in mind, please use the context methods rather than methods off of the m
 
 #### Context
 | Property | Description |
-| - | - |
+| - | - | 
 | message | Message object + `.args` which is an array of arguments|
 | client | Client |
 | command | Command object |
