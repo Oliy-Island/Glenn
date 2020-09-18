@@ -1,5 +1,5 @@
 module.exports.fn = async function () {
-   return this.reply(`lol whut`);
+   return this.reply('lol whut');
 }
 
-module.exports.aliases = ['']
+module.exports.aliases = ['hello']
