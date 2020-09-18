@@ -18,7 +18,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: pm2 restart all
+    - run: echo "DISCORD_TOKEN=$DISCORD_TOKEN" > .env
       env:
-        CI: true
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+    - run: pm2 kill
+    - run: pm2 start . -n "Glenn"
     - run: sleep 20 && tail -20 ~/.pm2/logs/Glen-out.log
