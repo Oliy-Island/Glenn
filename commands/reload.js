@@ -1,7 +1,7 @@
-module.exports.fn = async function () {
-    if (this.command.author.id !== process.env.OWNER_ID) return this.reply('This command is for the bot owner only. Fuk off.');
+module.exports.run = async function (message) {
+    if (message.author.id !== this.client.config.owner) return this.error('This command is for the bot owner only. Fuk off.');
 
-    await this.client.commands.reload();
+    await this.client.commands.load();
 
     this.reply('Successfully reloaded commands.');
 }
