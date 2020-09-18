@@ -39,6 +39,7 @@ class CommandHandler {
         const command = args.shift()
 
         const cmd = this.commands.find(x => [x.info.name, ...x.info.aliases].includes(command.toLowerCase()))
+        if (!cmd) return
 
         message.args = args
 
