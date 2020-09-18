@@ -34,7 +34,7 @@ class CommandHandler {
     event (message) {
         const prefix = this.client.config.prefixes.find(x => message.content.startsWith(x))
         if (!prefix) return
-
+        if(!message.channel.guild)return
         const args = message.content.slice(prefix.length).split(/\s/).filter(x => x)
         const command = args.shift()
 
@@ -42,6 +42,7 @@ class CommandHandler {
         if (!cmd) return
 
         message.args = args
+        message.guild = message.channel.guild
 
         const context = new CommandContext(this.client, cmd, message)
 
