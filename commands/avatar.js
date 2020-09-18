@@ -6,6 +6,3 @@ let avatarEmbed = new Discord.MessageEmbed()
     
     return this.send(avatarEmbed);
 }
-
-module.exports.info = {
-}
