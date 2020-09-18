@@ -3,5 +3,4 @@ module.exports.run = async function () {
 }
 
 module.exports.info = {
-    aliases: ['members']
 }
