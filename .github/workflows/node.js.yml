@@ -26,7 +26,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
       env: 
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        BASE_PREFIX: !
+        BASE_PREFIX: yesbaby
         OWNER_ID: 129908908096487424
         DEBUG: 0
     - run: npm install
