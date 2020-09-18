@@ -22,6 +22,8 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', async msg => {
+    if (message.author.bot) return;
+    
     for (let check of Object.keys(client.commands.awaitingResponses)) {
         if (client.commands.awaitingResponses[check](msg)) return;
     }
