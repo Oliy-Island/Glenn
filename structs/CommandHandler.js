@@ -35,7 +35,7 @@ class CommandHandler {
         const prefix = this.client.config.prefixes.find(x => message.content.startsWith(x))
         if (!prefix) return
 
-        const args = message.content.slice(prefix.length).split(/\s/)
+        const args = message.content.slice(prefix.length).split(/\s/).filter(x => x)
         const command = args.shift()
 
         const cmd = this.commands.find(x => [x.info.name, ...x.info.aliases].includes(command.toLowerCase()))
