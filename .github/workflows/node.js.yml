@@ -14,17 +14,11 @@ jobs:
     - name: Deploy
       env:
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-      # run: |
-      #   cd ~/glenn &&
-      #   git config --global user.email "support@top.gg" &&
-      #   git config --global user.name "Glenn" &&
-      #   git fetch --all &&
-      #   git reset --hard origin/master &&
-      #   echo "DISCORD_TOKEN=$DISCORD_TOKEN" > .env &&
-      #   npm install &&
-      #   rm -f ~/.pm2/logs/* &&
-      #   pm2 kill &&
-      #   pm2 start &&
-      #   sleep 5 &&
-      #   tail -10 ~/.pm2/logs/glenn-out.log
-      run: cd ~/glenn && pm2 kill && pm2 start
+      run: |
+        cd ~/glenn &&
+        git config --global user.email "support@top.gg" &&
+        git config --global user.name "Glenn" &&
+        git fetch --all &&
+        git reset --hard origin/master &&
+        echo "DISCORD_TOKEN=$DISCORD_TOKEN" > .env &&
+        npm install
