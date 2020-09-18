@@ -22,17 +22,8 @@ jobs:
         git reset --hard origin/master &&
         echo "DISCORD_TOKEN=$DISCORD_TOKEN" > .env &&
         npm install &&
-        node .
-      
-
-    # steps:
-    # - uses: actions/checkout@v2
-    # - name: Use Node.js ${{ matrix.node-version }}
-    #   uses: actions/setup-node@v1
-    #   with:
-    #     node-version: ${{ matrix.node-version }}
-    # - run: echo "DISCORD_TOKEN=$DISCORD_TOKEN" > .env
-    # - run: npm install
-    #   env:
-    #     DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-    # - run: pm2 kill && pm2 start . -n "Glenn"
+        rm -f ~/.pm2/logs/* &&
+        pm2 kill &&
+        pm2 start &&
+        sleep 5 &&
+        tail -10 ~/.pm2/logs/glenn-out.log
