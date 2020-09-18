@@ -24,6 +24,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+      env: 
+        DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        BASE_PREFIX: !
+        OWNER_ID: 129908908096487424
     - run: npm install
     - run: pm2 restart Bot
 
