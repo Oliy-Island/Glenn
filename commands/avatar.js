@@ -8,5 +8,4 @@ let avatarEmbed = new Discord.MessageEmbed()
 }
 
 module.exports.info = {
-    aliases: ['avatar']
 }
