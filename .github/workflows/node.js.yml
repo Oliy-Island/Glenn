@@ -18,6 +18,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: pm2 reload Bot
+    - run: pm2 restart all
       env:
         CI: true
