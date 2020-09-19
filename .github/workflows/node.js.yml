@@ -30,10 +30,7 @@ jobs:
     needs: build
     steps:
       - name: Deploy package to vps
-        uses: appleboy/ssh-action@0.0.6
-        env:
-          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
