@@ -27,7 +27,7 @@ const config = {
     ],
     citizen: [
       'citizen-oval',
-      'Congratulations {{ user }}, for becoming the island\'s newest resident!:tada:'
+      'Congratulations {{ user }}, for becoming the island\'s newest citizen!:tada:'
     ]
   },
   authorities: { // Sets GuildMember#authority (none = -1)
