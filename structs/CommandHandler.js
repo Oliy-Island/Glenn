@@ -27,6 +27,7 @@ class CommandHandler {
             if (!cmd.info) cmd.info = {}
             if (!cmd.info.aliases) cmd.info.aliases = []
             if (!cmd.info.level) cmd.info.level = false
+            if (!cmd.info.authority) cmd.info.authority = -1
 
             cmd.info.name = name
 
@@ -49,6 +50,7 @@ class CommandHandler {
         const context = new CommandContext(this.client, cmd, message)
         
         if (!this.checkLevel(message.author.id, cmd.info.level)) return context.error('You\'re not allowed to run this command.')
+        if (message.member.authority < cmd.info.authority) return context.error('You don\'t have enough authority!')
 
         try {
             cmd.run.bind(context)(message)

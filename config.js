@@ -34,6 +34,9 @@ const config = {
     guest: 0,
     resident: 1,
     citizen: 2
+  },
+  misc: {
+    requiredResidentVote: 3 // total of authority ex; (2x citizen or 3x resident or 1 citizen & 2 residents, etc.)
   }
 }
 
