@@ -36,11 +36,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           password: ${{ secrets.PASSWORD }}
-          script: |
-            cd ~/glenn && 
-            git config --global user.email "support@top.gg" &&
-            git config --global user.name "Glenn" &&
-            git fetch --all &&
-            git reset --hard origin/master && 
-            npm ci
-            pm2 start
+          script: | 
+            cd ~/glenn && git fetch --all && git reset --hard origin/master && npm ci && pm2 start
