@@ -36,5 +36,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           password: ${{ secrets.PASSWORD }}
-          script: | 
-            cd ~/glenn && git fetch --all && git reset --hard origin/master && npm ci && pm2 start
+          script: |
+            export NVM_DIR=~/.nvm &&
+            source ~/.nvm/nvm.sh &&
+            cd ~/glenn && 
+            git fetch --all &&
+            git reset --hard origin/master &&
+            npm ci &&
+            pm2 start
