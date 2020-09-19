@@ -42,5 +42,9 @@ jobs:
             cd ~/glenn && 
             git fetch --all &&
             git reset --hard origin/master &&
+            git pull origin master &&
             npm ci &&
-            pm2 start
+            pm2 restart glenn &&
+            sleep 10 && tail -n 20 ~/.pm2/logs/glenn*.log &&
+            pm2 ls &&
+            cat ecosystem.config.js
