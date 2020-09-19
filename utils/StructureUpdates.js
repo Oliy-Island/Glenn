@@ -8,10 +8,16 @@ module.exports = (client) => {
       }
 
       get authority () {
-        if (this.roles.cache.has(client.config.roles.citizen)) return 2
-        if (this.roles.cache.has(client.config.roles.resident)) return 1
+        let auth = -1
 
-        return 0
+        Object.keys(client.config.authorities).forEach(role => {
+          if (!this.roles.cache.has(role)) return
+          if (auth > client.config.authorities[role]) return
+
+          auth = client.config.authorities[role]
+        })
+        
+        return auth
       }
     }
 

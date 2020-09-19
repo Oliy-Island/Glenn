@@ -30,6 +30,11 @@ const config = {
       'Congratulations {{ user }}, for becoming the island\'s newest resident!:tada:'
     ]
   },
+  authorities: { // Sets GuildMember#authority (none = -1)
+    guest: 0,
+    resident: 1,
+    citizen: 2
+  }
 }
 
 if (fs.existsSync('./overrides.js')) {
@@ -37,7 +42,10 @@ if (fs.existsSync('./overrides.js')) {
 
   function runObject (current, changes) {
     Object.keys(changes).forEach(key => {
-      if (typeof changes[key] === 'object') return runObject(current[key], changes[key])
+      if (typeof changes[key] === 'object') {
+        if (!current[key]) current[key] = {}
+        return runObject(current[key], changes[key])
+      }
 
       current[key] = changes[key]
     })
@@ -55,6 +63,12 @@ Object.keys(config.welcoming).forEach(role => {
   ]
 
   delete config.welcoming[role]
+})
+
+Object.keys(config.authorities).forEach(role => {
+  config.authorities[config.roles[role]] = config.authorities[role]
+
+  delete config.authorities[role]
 })
 
 module.exports = config
