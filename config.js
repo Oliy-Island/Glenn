@@ -1,6 +1,7 @@
 const config = {
   prefixes: ['!'],
   owner: '129908908096487424',
+  developers: [],
   guild: '419422246168166400',
   roles: {
     guest: '755412205041877033',

@@ -5,3 +5,7 @@ module.exports.run = async function (message) {
 
     this.reply('Successfully reloaded commands.');
 }
+
+module.exports.info = {
+    level: 'developer'
+}

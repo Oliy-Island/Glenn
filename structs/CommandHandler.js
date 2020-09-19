@@ -13,6 +13,8 @@ class CommandHandler {
     }
 
     load () {
+        this.commands.clear()
+
         const commands = readdirSync(Path.resolve(__dirname, '../commands'))
 
         commands.forEach(command => {
@@ -24,6 +26,7 @@ class CommandHandler {
 
             if (!cmd.info) cmd.info = {}
             if (!cmd.info.aliases) cmd.info.aliases = []
+            if (!cmd.info.level) cmd.info.level = false
 
             cmd.info.name = name
 
@@ -44,6 +47,8 @@ class CommandHandler {
         message.args = args
 
         const context = new CommandContext(this.client, cmd, message)
+        
+        if (!this.checkLevel(message.author.id, cmd.info.level)) return context.error('You\'re not allowed to run this command.')
 
         try {
             cmd.run.bind(context)(message)
@@ -52,6 +57,28 @@ class CommandHandler {
 
             context.error()
         }
+    }
+
+    /**
+     * Check if user has command permission level
+     * @param {Snowflake} user User
+     * @param {String} level Level
+     */
+    checkLevel (user, level) {
+        let allowed = false
+        switch (level) {
+            case 'owner':
+                allowed = this.client.config.owner === user
+                break
+            case 'developer':
+                allowed = this.client.config.owner === user ||
+                       this.client.config.developers.includes(user)
+                break
+            default:
+                allowed = true
+                break
+        }
+        return allowed
     }
 }
 
