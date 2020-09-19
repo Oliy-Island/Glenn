@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 const config = {
   prefixes: ['!'],
   owner: '129908908096487424',
@@ -28,6 +30,20 @@ const config = {
       'Congratulations {{ user }}, for becoming the island\'s newest resident!:tada:'
     ]
   },
+}
+
+if (fs.existsSync('./overrides.js')) {
+  const overrides = require('./overrides')
+
+  function runObject (current, changes) {
+    Object.keys(changes).forEach(key => {
+      if (typeof changes[key] === 'object') return runObject(current[key], changes[key])
+
+      current[key] = changes[key]
+    })
+  }
+
+  runObject(config, overrides)
 }
 
 // config setup
