@@ -39,12 +39,12 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm &&
             source ~/.nvm/nvm.sh &&
-            cd ~/glenn && 
+            cd ~/Glenn && 
             git fetch --all &&
             git reset --hard origin/master &&
             git pull origin master &&
             npm ci &&
-            pm2 restart glenn &&
+            pm2 start &&
             sleep 10 && tail -n 20 ~/.pm2/logs/glenn*.log &&
             pm2 ls &&
             cat ecosystem.config.js
