@@ -51,7 +51,7 @@ class Client extends Discord.Client {
 	 * @param {Object} obj Extra replacements
 	 */
 	replacer (string, obj) {
-		return StringReplace(this.config, string, obj)
+		return StringReplace(this, string, obj)
 	}
 
 	/**
@@ -65,6 +65,28 @@ class Client extends Discord.Client {
 		await this.login(process.env.DISCORD_TOKEN)
 
 		this.config.prefixes.push(`<@${this.user.id}>`, `<@!${this.user.id}>`)
+	}
+
+	/**
+	 * Get channel from config
+	 * @param {String} id Channel Name
+	 */
+	channel (id) {
+		id = this.config.channels[id]
+		if (!id) return null
+
+		return this.channels.cache.get(id)
+	}
+
+	/**
+	 * Get role from config
+	 * @param {String} id Role Name
+	 */
+	role (id) {
+		id = this.config.roles[id]
+		if (!id) return null
+
+		return this.guild.roles.cache.get(id)
 	}
 }
 
