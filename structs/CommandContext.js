@@ -23,7 +23,7 @@ class CommandContext {
     error (text) {
         return this.send(this.client.embed
             .setColor('RED')
-            .setTitle(`${text ? `Error Occured: ${text}` : 'An Error Occured While Running This Command'}`)
+            .setDescription(`${text ? `Error Occured: ${text}` : 'An Error Occured While Running This Command'}`)
             .setTimestamp()
         )
     }
