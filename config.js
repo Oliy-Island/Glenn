@@ -6,6 +6,7 @@ const config = {
   developers: [],
   guild: '419422246168166400',
   roles: {
+    unverified: '757359333183979621',
     guest: '755412205041877033',
     resident: '755412894794907728',
     citizen: '755416646579126316'
