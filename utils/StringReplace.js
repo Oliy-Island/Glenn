@@ -1,4 +1,4 @@
-module.exports = function (config, str, obj = {}) {
+module.exports = function (client, str, obj = {}) {
     const match = str.match(/{{ [\w\.-]+ }}/g)
     if (!match) return str
 
@@ -19,9 +19,9 @@ module.exports = function (config, str, obj = {}) {
 
         switch (piece) {
           case 'channels':
-            const channel = config.channels[prop]
+            const channel = client.channel(prop)
             if (!channel) return
-            replace = `<#${channel}>`
+            replace = `${channel}`
             break
         }
 

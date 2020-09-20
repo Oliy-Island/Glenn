@@ -27,6 +27,14 @@ class CommandContext {
             .setTimestamp()
         )
     }
+
+    get channel () {
+        return this.client.channel
+    }
+
+    get role () {
+        return this.client.role
+    }
 }
 
 module.exports = CommandContext;

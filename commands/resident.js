@@ -26,8 +26,8 @@ module.exports.run = function (message) {
 
   votes.delete(member.id)
 
-  member.roles.add(this.client.config.roles.resident)
-  member.roles.remove(this.client.config.roles.guest)
+  member.roles.add(this.role('resident'))
+  member.roles.remove(this.role('guest'))
 }
 
 module.exports.info = {
