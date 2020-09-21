@@ -1,6 +1,6 @@
 const { Collection } = require('discord.js')
 
-const { readdirSync } = require('fs')
+const { readdirSync, statSync } = require('fs')
 const Path = require('path')
 
 const CommandContext = require('./CommandContext')
@@ -12,17 +12,17 @@ class CommandHandler {
         this.commands = new Collection()
     }
 
-    load () {
-        this.commands.clear()
-
-        const commands = readdirSync(Path.resolve(__dirname, '../commands'))
+    _loadFolder (folder) {
+        const commands = readdirSync(folder)
 
         commands.forEach(command => {
+            const place = Path.resolve(folder, command)
+            if (statSync(place).isDirectory()) return this._loadFolder(place)
             const [name, ext] = command.split('.')
             if (ext !== 'js') return
 
-            delete require.cache[require.resolve(`../commands/${command}`)]
-            const cmd = require(`../commands/${command}`)
+            delete require.cache[require.resolve(place)]
+            const cmd = require(place)
 
             if (!cmd.info) cmd.info = {}
             if (!cmd.info.aliases) cmd.info.aliases = []
@@ -33,6 +33,12 @@ class CommandHandler {
 
             this.commands.set(name, cmd)
         })
+    }
+
+    load () {
+        this.commands.clear()
+
+        this._loadFolder(Path.resolve(__dirname, '../commands'))
     }
 
     event (message) {
