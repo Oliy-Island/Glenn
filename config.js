@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const config = {
-  prefixes: ['!'],
+  prefixes: ['!!'],
   owner: '129908908096487424',
   developers: [],
   guild: '419422246168166400',

@@ -7,6 +7,8 @@ const EventHandler = require('./EventHandler')
 
 const StringReplace = require('../utils/StringReplace')
 
+const db = require('../utils/db')
+
 /**
  * Client
  */
@@ -35,6 +37,12 @@ class Client extends Discord.Client {
 		 * @type {?Guild}
 		 */
 		this.guild = null
+
+		/**
+ 		 * Database
+ 		 * @type {DatabaseConnection}
+		 */
+		this.db = db;
 	}
 
 	/**
