@@ -16,7 +16,7 @@ if (env === 'dev') {
     pass: '',
   });
 } else {
-  mongoose.connect(url, { user: 'admin', pass: process.env.DB_SECRET });
+  mongoose.connect(url, { user: '', pass: '' });
 }
 
 // Collect models
