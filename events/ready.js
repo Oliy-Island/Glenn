@@ -4,7 +4,7 @@ module.exports = async function () {
     this.guild = this.guilds.cache.get(this.config.guild)
     if (this.guild) await this.guild.members.fetch().then(x => console.log(`Loaded ${x.size} members`))
 
-    this.user.setActivity('the island...', { type: 'WATCHING' })
+    this.user.setActivity('the ice cubes melt in my water.', { type: 'WATCHING' })
 
     // account for downtime
 
