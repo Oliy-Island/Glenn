@@ -22,15 +22,15 @@ const config = {
   welcoming: {
     guest: [
       'northern-beach',
-      'Welcome to the island {{ user }}:sparkles:\n\nMake sure to check out {{ channels.bulletin-board }}:pushpin:'
+      'Welcome to the island {{ user }} :sparkles:\n\nMake sure to check out {{ channels.bulletin-board }} :pushpin:'
     ],
     resident: [
       'resident-lounge',
-      'Congratulations {{ user }}, for becoming the island\'s newest resident!:tada:'
+      'Congratulations {{ user }}, for becoming the island\'s newest resident! :tada:'
     ],
     citizen: [
       'citizen-oval',
-      'Congratulations {{ user }}, for becoming the island\'s newest citizen!:tada:'
+      'Congratulations {{ user }}, for becoming the island\'s newest citizen! :tada:'
     ]
   },
   authorities: { // Sets GuildMember#authority (none = -1)
