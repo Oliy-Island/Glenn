@@ -4,6 +4,8 @@ const config = {
   prefixes: ['!'],
   owner: '129908908096487424',
   developers: [],
+  dbPort: 27017,
+  dbHost: 'localhost',
   guild: '419422246168166400',
   roles: {
     unverified: '757359333183979621',
