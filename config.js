@@ -43,19 +43,19 @@ const config = {
   }
 }
 
+function runObject (current, changes) {
+  Object.keys(changes).forEach(key => {
+    if (typeof changes[key] === 'object') {
+      if (!current[key]) current[key] = {}
+      return runObject(current[key], changes[key])
+    }
+
+    current[key] = changes[key]
+  })
+}
+
 if (fs.existsSync('./overrides.js')) {
   const overrides = require('./overrides')
-
-  function runObject (current, changes) {
-    Object.keys(changes).forEach(key => {
-      if (typeof changes[key] === 'object') {
-        if (!current[key]) current[key] = {}
-        return runObject(current[key], changes[key])
-      }
-
-      current[key] = changes[key]
-    })
-  }
 
   runObject(config, overrides)
 }

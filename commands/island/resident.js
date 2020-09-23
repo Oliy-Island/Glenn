@@ -17,7 +17,7 @@ module.exports.run = function (message) {
   if (vote[message.author.id]) return this.error('You\'ve already voted for this user')
 
   vote[message.author.id] = message.member.authority
-  
+
   const total = Object.values(vote).reduce((a, b) => a + b, 0)
 
   this.reply(`Voted for ${member} to become resident +${message.member.authority} (${total} / ${this.client.config.misc.requiredResidentVote})`)

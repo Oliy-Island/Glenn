@@ -7,7 +7,7 @@ module.exports.run = async function (message) {
 
   try {
     const code = message.args.join(' ')
-    
+
     let evaled = eval(code) // eslint-disable-line no-eval
     if (evaled && evaled.then) evaled = await evaled
 
