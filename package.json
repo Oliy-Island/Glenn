@@ -25,5 +25,10 @@
   "bugs": {
     "url": "https://github.com/Oliy-Island/Glenn/issues"
   },
-  "homepage": "https://github.com/Oliy-Island/Glenn#readme"
+  "homepage": "https://github.com/Oliy-Island/Glenn#readme",
+  "standard": {
+    "ignore": [
+      "node_modules/*"
+    ]
+  }
 }

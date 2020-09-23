@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 
 const Client = require('./structs/Client')
 
@@ -9,4 +9,3 @@ require('./utils/StructureUpdates')(client)
 client.start()
 
 module.exports = client // node debugging
-

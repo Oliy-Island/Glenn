@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const config = require('../config');
-const { promises: fs } = require('fs');
-const path = require('path');
+const mongoose = require('mongoose')
+const config = require('../config')
+const { promises: fs } = require('fs')
+const path = require('path')
 
-const env = process.env.NODE_ENV || 'prod';
-const host = config.dbHost || 'localhost';
-const url = `mongodb://${host}:${config.dbPort}/island`;
+const env = process.env.NODE_ENV || 'prod'
+const host = config.dbHost || 'localhost'
+const url = `mongodb://${host}:${config.dbPort}/island`
 
 // Connect to mongo
 if (env === 'dev') {
@@ -13,22 +13,21 @@ if (env === 'dev') {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     user: '',
-    pass: '',
-  });
+    pass: ''
+  })
 } else {
-  mongoose.connect(url, { user: '', pass: '' });
+  mongoose.connect(url, { user: '', pass: '' })
 }
 
 // Collect models
-const models = {};
+const models = {}
 
 fs.readdir(path.join(__dirname, '../models'))
   .then(files => {
     for (const file of files) {
-      const key = file.split('.')[0];
-      models[key] = require(`../models/${key}`);
+      const key = file.split('.')[0]
+      models[key] = require(`../models/${key}`)
     }
-  });
+  })
 
-
-module.exports = models;
+module.exports = models

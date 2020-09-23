@@ -2,7 +2,7 @@ const { Collection } = require('discord.js')
 
 const votes = new Collection()
 
-module.exports.run = function (message) {
+exports.run = function (message) {
   const member = message.mentions.members.first()
   if (!member) return this.reply('Format: `!resident @user`')
 
@@ -17,7 +17,7 @@ module.exports.run = function (message) {
   if (vote[message.author.id]) return this.error('You\'ve already voted for this user')
 
   vote[message.author.id] = message.member.authority
-  
+
   const total = Object.values(vote).reduce((a, b) => a + b, 0)
 
   this.reply(`Voted for ${member} to become resident +${message.member.authority} (${total} / ${this.client.config.misc.requiredResidentVote})`)
@@ -30,6 +30,6 @@ module.exports.run = function (message) {
   member.roles.remove(this.role('guest'))
 }
 
-module.exports.info = {
+exports.info = {
   authority: 1
 }

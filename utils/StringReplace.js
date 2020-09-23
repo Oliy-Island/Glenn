@@ -1,33 +1,35 @@
 module.exports = function (client, str, obj = {}) {
-    const match = str.match(/{{ [\w\.-]+ }}/g)
-    if (!match) return str
+  const match = str.match(/{{ [\w.-]+ }}/g)
+  if (!match) return str
 
-    match.forEach(part => {
-        let bit = part.match(/{{ ([\w+.-]+) }}/)
-        if (!bit) return
-        bit = bit[1]
+  match.forEach(part => {
+    let bit = part.match(/{{ ([\w+.-]+) }}/)
+    if (!bit) return
+    bit = bit[1]
 
-        if (obj[bit]) {
-          str = str.replace(new RegExp(`{{ ${bit} }}`, 'gi'), obj[bit])
-          return
-        }
+    if (obj[bit]) {
+      str = str.replace(new RegExp(`{{ ${bit} }}`, 'gi'), obj[bit])
+      return
+    }
 
-        const [piece, prop] = bit.split('.')
-        if (!prop) return
+    const [piece, prop] = bit.split('.')
+    if (!prop) return
 
-        let replace = null
+    let replace = null
 
-        switch (piece) {
-          case 'channels':
-            const channel = client.channel(prop)
-            if (!channel) return
-            replace = `${channel}`
-            break
-        }
+    let channel
 
-        if (!replace) return
+    switch (piece) {
+      case 'channels':
+        channel = client.channel(prop)
+        if (!channel) return
+        replace = `${channel}`
+        break
+    }
 
-        str = str.replace(new RegExp(`{{ ${bit} }}`, 'gi'), replace)
-    })
-    return str
+    if (!replace) return
+
+    str = str.replace(new RegExp(`{{ ${bit} }}`, 'gi'), replace)
+  })
+  return str
 }

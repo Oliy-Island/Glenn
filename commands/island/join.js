@@ -1,7 +1,7 @@
-module.exports.run = async function (message) {
+exports.run = async function (message) {
   const activeElection = await this.client.db.Election.checkActive()
-  if (!activeElection) return this.error('There is currently no active election to join');
-  const candidates = activeElection.candidates;
+  if (!activeElection) return this.error('There is currently no active election to join')
+  const candidates = activeElection.candidates
   const checkUserId = candidates.find(userId => userId === message.author.id)
   if (checkUserId) return this.error('You have already joined this election')
   candidates.push(message.author.id)
@@ -9,6 +9,6 @@ module.exports.run = async function (message) {
   this.reply('You have successfully joined this election!')
 }
 
-module.exports.info = {
+exports.info = {
   authority: 1
 }

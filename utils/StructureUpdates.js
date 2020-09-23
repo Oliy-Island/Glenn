@@ -3,10 +3,6 @@ const { Structures } = require('discord.js')
 module.exports = (client) => {
   Structures.extend('GuildMember', GuildMember => {
     class UpdatedGuildMember extends GuildMember {
-      constructor (...d) {
-        super(...d)
-      }
-
       get authority () {
         let auth = -1
 
@@ -16,7 +12,7 @@ module.exports = (client) => {
 
           auth = client.config.authorities[role]
         })
-        
+
         return auth
       }
     }
