@@ -5,7 +5,7 @@ function sortByKey (array, key) {
   })
 }
 
-module.exports.run = async function (message) {
+exports.run = async function (message) {
   const getElection = await this.client.db.Election.getElection(message.args[0])
   if (!getElection) return this.error('No election with that ID found')
 
@@ -33,6 +33,6 @@ module.exports.run = async function (message) {
   this.reply(resultsMessage)
 }
 
-module.exports.info = {
+exports.info = {
   level: 'owner'
 }

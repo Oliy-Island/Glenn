@@ -1,3 +1,3 @@
-module.exports.run = function (message) {
+exports.run = function (message) {
   this.reply(`Authority: ${message.member.authority}`)
 }

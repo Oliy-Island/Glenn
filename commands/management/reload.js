@@ -1,4 +1,4 @@
-module.exports.run = async function (message) {
+exports.run = async function (message) {
   if (message.author.id !== this.client.config.owner) return this.error('This command is for the bot owner only. Please do not run this command.')
 
   await this.client.commands.load()
@@ -6,6 +6,6 @@ module.exports.run = async function (message) {
   this.reply('Successfully reloaded commands.')
 }
 
-module.exports.info = {
+exports.info = {
   level: 'developer'
 }

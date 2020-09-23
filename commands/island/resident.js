@@ -2,7 +2,7 @@ const { Collection } = require('discord.js')
 
 const votes = new Collection()
 
-module.exports.run = function (message) {
+exports.run = function (message) {
   const member = message.mentions.members.first()
   if (!member) return this.reply('Format: `!resident @user`')
 
@@ -30,6 +30,6 @@ module.exports.run = function (message) {
   member.roles.remove(this.role('guest'))
 }
 
-module.exports.info = {
+exports.info = {
   authority: 1
 }

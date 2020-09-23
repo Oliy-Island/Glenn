@@ -1,4 +1,4 @@
-module.exports.run = async function (message) {
+exports.run = async function (message) {
   const activeElection = await this.client.db.Election.checkActive()
   if (!activeElection) return this.error('There is currently no active election to vote in')
 
@@ -32,6 +32,6 @@ module.exports.run = async function (message) {
   this.reply('Thank you for voting! \n\n **Tip:** If you change your mind you can change your vote once per election by voting for someone else.')
 }
 
-module.exports.info = {
+exports.info = {
   authority: 1
 }

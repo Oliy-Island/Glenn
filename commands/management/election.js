@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-module.exports.run = async function (message) {
+exports.run = async function (message) {
   const parseTime = (time) => {
     if (time === 'now') return moment()
     return moment(time)
@@ -22,6 +22,6 @@ module.exports.run = async function (message) {
   return this.reply(`Successfully created election with ${createElection.winners} winners \n\n Election ID: ${createElection.id}`)
 }
 
-module.exports.info = {
+exports.info = {
   level: 'owner'
 }

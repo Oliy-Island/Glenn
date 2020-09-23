@@ -1,7 +1,7 @@
-module.exports.run = async function () {
+exports.run = async function () {
   return this.reply(`Pong! Discord gateway heartbeat took ${this.client.ws.ping}ms.`)
 }
 
-module.exports.info = {
+exports.info = {
   aliases: ['pong']
 }
