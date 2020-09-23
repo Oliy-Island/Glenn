@@ -12,7 +12,7 @@ class CommandContext {
   reply (text) {
     return this.send(this.client.embed
       .setColor('GREEN') // TODO
-      .setAuthor(msg.author.tag, msg.author.avatarURL())
+      .setFooter(msg.author.tag, msg.author.avatarURL())
       .setDescription(this.client.replacer(text, {
         user: `${this.message.author}`,
         channel: `${this.message.channel}`
@@ -24,7 +24,7 @@ class CommandContext {
   error (text) {
     return this.send(this.client.embed
       .setColor('RED')
-      .setAuthor(msg.author.tag, msg.author.avatarURL())
+      .setFooter(msg.author.tag, msg.author.avatarURL())
       .setDescription(`${text ? `Error Occured: ${text}` : 'An Error Occured While Running This Command'}`)
       .setTimestamp()
     )
