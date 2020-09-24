@@ -40,11 +40,11 @@ const checkActive = async () => {
 }
 
 const updateCandidates = async (electionId, candidates) => {
-  // const update = await ElectionModel.updateOne({ id: electionId }, { $set: { candidates } })
+  return ElectionModel.updateOne({ id: electionId }, { $set: { candidates } })
 }
 
 const updateVotes = async (electionId, votes) => {
-  // const update = await ElectionModel.updateOne({ id: electionId }, { $set: { votes } })
+  return ElectionModel.updateOne({ id: electionId }, { $set: { votes } })
 }
 
 const getElection = async (electionId) => {
