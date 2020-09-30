@@ -38,6 +38,11 @@ const config = {
     resident: 1,
     citizen: 2
   },
+  roleUpdates: { // <Receives, Removes>
+    guest: 'unverified',
+    resident: 'guest',
+    citizen: 'resident'
+  },
   misc: {
     requiredResidentVote: 3 // total of authority ex; (2x citizen or 3x resident or 1 citizen & 2 residents, etc.)
   }
@@ -75,6 +80,12 @@ Object.keys(config.authorities).forEach(role => {
   config.authorities[config.roles[role]] = config.authorities[role]
 
   delete config.authorities[role]
+})
+
+Object.keys(config.roleUpdates).forEach(role => {
+  config.roleUpdates[config.roles[role]] = config.roles[config.roleUpdates[role]]
+
+  delete config.roleUpdates[role]
 })
 
 module.exports = config

@@ -27,7 +27,6 @@ exports.run = function (message) {
   votes.delete(member.id)
 
   member.roles.add(this.role('resident'))
-  member.roles.remove(this.role('guest'))
 }
 
 exports.info = {

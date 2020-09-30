@@ -3,11 +3,16 @@ const RoleUpdate = require('../utils/RoleUpdate')
 module.exports = function (oldMember, newMember) {
   const updated = RoleUpdate(oldMember, newMember)
 
-  const addedRole = updated.added.find(x => this.config.welcoming[x.id])
-  if (!addedRole) return
+  const welcomedRole = updated.added.find(x => this.config.welcoming[x.id])
+  if (welcomedRole) {
+    const welcoming = this.config.welcoming[welcomedRole.id]
 
-  const welcoming = this.config.welcoming[addedRole.id]
+    this.channels.cache.get(welcoming[0])
+      .send(this.replacer(welcoming[1], { user: `${newMember}` }))
+  }
 
-  this.channels.cache.get(welcoming[0])
-    .send(this.replacer(welcoming[1], { user: `${newMember}` }))
+  const updateRole = updated.added.find(x => this.config.roleUpdates[x.id])
+  if (updateRole) {
+    newMember.roles.remove(this.config.roleUpdates[updateRole.id])
+  }
 }
